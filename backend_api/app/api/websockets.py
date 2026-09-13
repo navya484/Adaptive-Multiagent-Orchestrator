@@ -1,9 +1,10 @@
 import json
 from typing import Dict
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Query
 from pydantic import ValidationError
 
 from app.schemas.ai_contract import AIRequestPayload, AIResponsePayload
+from app.core.security import verify_ws_token
 
 router = APIRouter()
 
@@ -31,11 +32,14 @@ class ConnectionManager:
 manager = ConnectionManager()
 
 @router.websocket("/ws/{session_id}")
-async def websocket_endpoint(websocket: WebSocket, session_id: str):
+async def websocket_endpoint(websocket: WebSocket, session_id: str, token: str = Query(...)):
     """
-    The main persistent pipeline between the Frontend and the Platform.
-    Notice we DO have a URL endpoint here, but it is purely for the initial handshake.
+    The main persistent pipeline.
+    The 'token' is required in the URL (e.g., /ws/123?token=jwt_here) to secure the socket.
     """
+    # 1. SECURITY CHECK: Verify the JWT token before accepting the connection!
+    user_id = verify_ws_token(token)
+    
     await manager.connect(websocket, session_id)
     try:
         while True:

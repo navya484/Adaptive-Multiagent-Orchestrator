@@ -2,3 +2,9 @@ fastapi
 uvicorn
 pydantic
 websockets
+redis
+sqlalchemy
+psycopg2-binary
+asyncpg
+pgvector
+pyjwt

@@ -8,9 +8,12 @@ export default function AgentChat() {
   const ws = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    // Connect to FastAPI WebSocket backend
+    // For dev purposes, we use a mocked JWT token. In production, this comes from next-auth or similar.
+    const mockToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0X3VzZXJfMTIzIn0.X-a-Y_h_something_mocked";
     const session_id = "session-" + Math.random().toString(36).substring(7);
-    ws.current = new WebSocket(`ws://localhost:8000/ws/${session_id}`);
+    
+    // Connect to FastAPI WebSocket backend with the token in the URL
+    ws.current = new WebSocket(`ws://localhost:8000/ws/${session_id}?token=${mockToken}`);
 
     ws.current.onopen = () => setStatus("Connected to Platform");
     
