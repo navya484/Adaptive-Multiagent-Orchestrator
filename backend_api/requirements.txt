@@ -8,3 +8,7 @@ psycopg2-binary
 asyncpg
 pgvector
 pyjwt
+opentelemetry-api
+opentelemetry-sdk
+opentelemetry-instrumentation-fastapi
+prometheus-client
