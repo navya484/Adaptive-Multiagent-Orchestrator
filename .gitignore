@@ -1,0 +1,27 @@
+# Personal / Local Documentation
+docs/
+
+# Python / FastAPI Backend
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+venv/
+env/
+.env
+.venv/
+
+# Node.js / Next.js Frontend
+# (Note: Next.js may also have its own .gitignore in the frontend/ folder, 
+# but we include these here for safety)
+node_modules/
+.next/
+out/
+build/
+.npm/
+
+# OS / Editor Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
